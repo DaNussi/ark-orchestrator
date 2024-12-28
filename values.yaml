@@ -42,12 +42,7 @@ game:
         client: 7778
         listen: 27015
         rcon: 27020
-      storage: 
-        accessModes: [ "ReadWriteOnce" ]
-        storageClassName: "nfs-client"
-        resources:
-          requests:
-            storage: 1Gi
+      storage: 1Gi
 
   mods:
     - "44654654"
