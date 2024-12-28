@@ -60,7 +60,7 @@ spec:
       name: data
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "defaut"
+      storageClassName: {{ $map.storage.storageClassName }}
       resources:
         requests:
           storage: 1Gi
