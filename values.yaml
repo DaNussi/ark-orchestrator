@@ -44,7 +44,7 @@ game:
         rcon: 27020
       storage: 
         accessModes: [ "ReadWriteOnce" ]
-        storageClassName: "default"
+        storageClassName: "nfs-client"
         resources:
           requests:
             storage: 1Gi
