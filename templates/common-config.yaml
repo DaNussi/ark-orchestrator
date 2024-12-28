@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-common-config
+  namespace: {{ .Release.Namespace }}
+data:
+  SERVER_PASSWORD: "{{ .Values.game.players.password }}"
+  ADMIN_PASSWORD: "{{ .Values.game.admin.password }}"
+  MAX_PLAYERS: "{{ .Values.game.players.max }}"
+  UPDATE_ON_START: "{{ .Values.game.events.onStart.update}}"
+  BACKUP_ON_STOP: "{{ .Values.game.events.onStop.backup }}"
+  WARN_ON_STOP: "{{ .Values.game.events.onStop.warn }}"
+  PRE_UPDATE_BACKUP: "{{ .Values.game.events.preUpdate.backup }}"
+  ENABLE_CROSSPLAY: "{{ .Values.game.anticheat.crossplay }}"
+  DISABLE_BATTLEYE: "{{ not .Values.game.anticheat.battleye }}"
+  ARK_SERVER_VOLUME: "/app"
+  GAME_MOD_IDS: "{{ join "," .Values.game.mods }}"

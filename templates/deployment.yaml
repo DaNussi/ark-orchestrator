@@ -1,72 +1,68 @@
+{{- range $map := .Values.game.maps }}
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: {{ include "ark-orchestrator.fullname" . }}
-  labels:
-    {{- include "ark-orchestrator.labels" . | nindent 4 }}
+  name: {{ $.Release.Name }}-map-{{$map.names.k8s}}
+  namespace: {{ $.Release.Namespace }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
-      {{- include "ark-orchestrator.selectorLabels" . | nindent 6 }}
+      app: {{ $.Release.Name }}-map-{{$map.names.k8s}}
+  serviceName: {{ $.Release.Name }}-svc-{{$map.names.k8s}}
+  replicas: 1
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "ark-orchestrator.labels" . | nindent 8 }}
-	{{- with .Values.podLabels }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
+        app: {{ $.Release.Name }}-map-{{$map.names.k8s}}
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "ark-orchestrator.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
-      volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      - name: ark
+        image: {{ $.Values.image.repository }}:{{ $.Values.image.tag }}
+        imagePullPolicy: {{ $.Values.image.pullPolicy }}
+
+        envFrom:
+        - configMapRef:
+            name: {{ $.Release.Name }}-common-config
+
+        env:
+        - name: SESSION_NAME
+          value: "{{ $.Values.game.name }} - {{$map.names.title}}"
+        - name: SERVER_MAP
+          value: "{{$map.names.map}}"
+        - name: GAME_CLIENT_PORT
+          value: "{{ $map.ports.game }}"
+        - name: UDP_SOCKET_PORT
+          value: "{{ $map.ports.client }}"
+        - name: SERVER_LIST_PORT
+          value: "{{ $map.ports.listen }}"
+        - name: RCON_PORT
+          value: "{{ $map.ports.rcon }}"
+
+
+        ports:
+        - containerPort: {{ $map.ports.game }}
+          name: game
+        - containerPort: {{ $map.ports.client }}
+          name: client
+        - containerPort: {{ $map.ports.listen }}
+          name: list
+        - containerPort: {{ $map.ports.rcon }}
+          name: rcon
+
+
+        volumeMounts:
+        - name: data
+          mountPath: /app
+
+
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "defaut"
+      resources:
+        requests:
+          storage: 1Gi
+---
+{{- end}}
