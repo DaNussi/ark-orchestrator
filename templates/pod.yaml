@@ -11,9 +11,6 @@ spec:
   - name: ark
     image: {{ $.Values.image.repository }}:{{ $.Values.image.tag }}
     imagePullPolicy: {{ $.Values.image.pullPolicy }}
-    securityContext:
-      runAsUser: 1000
-      fsGroup: 1000
     envFrom:
       - configMapRef:
           name: {{ $.Release.Name }}-common-config
@@ -30,8 +27,6 @@ spec:
         value: "27015"
       - name: RCON_PORT
         value: "27020"
-      - name: ARK_SERVER_VOLUME
-        value: "/app"
     ports:
       - containerPort: 7777
         name: game
