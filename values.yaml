@@ -44,7 +44,7 @@ game:
         rcon: 27020
       storage: 
         size: 1Gi
-        class: standard
+        class:
 
   mods:
     - "44654654"
