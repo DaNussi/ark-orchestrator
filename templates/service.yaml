@@ -24,7 +24,7 @@ spec:
       nodePort: {{ $map.ports.listen }}
       targetPort: listen
       name: listen
-    - protocol: UDP
+    - protocol: TCP
       port: {{ $map.ports.rcon }}
       nodePort: {{ $map.ports.rcon }}
       targetPort: rcon
