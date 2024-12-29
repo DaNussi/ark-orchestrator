@@ -39,11 +39,27 @@ game:
         k8s: "the-island"
       ports:
         game: 7777
-        client: 7778
+        socket: 7778
         listen: 27015
         rcon: 27020
       storage: 
-        storageClassName: default
+        storageClassName: nfs-client
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 4Gi
+    - names:
+        title: "The Center"
+        map: "TheCenter"
+        k8s: "the-center"
+      ports:
+        game: 7779
+        socket: 7780
+        listen: 27016
+        rcon: 27021
+      storage: 
+        storageClassName: nfs-client
         accessModes:
           - ReadWriteOnce
         resources:

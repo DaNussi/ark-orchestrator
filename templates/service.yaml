@@ -1,0 +1,29 @@
+{{- range $map := .Values.game.maps }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $.Release.Name }}-map-{{ $map.names.k8s }}-svc
+  namespace: {{ $.Release.Namespace }}
+spec:
+  type: NodePort
+  selector:
+    app: {{ $.Release.Name }}-map
+  ports:
+    - protocol: UDP
+      port: {{ $map.ports.game }}
+      nodePort: {{ $map.ports.game }}
+      targetPort: game
+    - protocol: UDP
+      port: {{ $map.ports.socket }}
+      nodePort: {{ $map.ports.socket }}
+      targetPort: socket
+    - protocol: UDP
+      port: {{ $map.ports.listen }}
+      nodePort: {{ $map.ports.listen }}
+      targetPort: listen
+    - protocol: UDP
+      port: {{ $map.ports.rcon }}
+      nodePort: {{ $map.ports.rcon }}
+      targetPort: rcon
+---
+{{- end}}

@@ -4,6 +4,8 @@ kind: Pod
 metadata:
   name: {{ $.Release.Name }}-map-{{ $map.names.k8s }}-pod
   namespace: {{ $.Release.Namespace }}
+  labels:
+    app: {{ $.Release.Name }}-map
 spec:
   containers:
   - name: ark
@@ -21,21 +23,21 @@ spec:
       - name: SERVER_MAP
         value: "{{$map.names.map}}"
       - name: GAME_CLIENT_PORT
-        value: "{{ $map.ports.game }}"
+        value: "7777"
       - name: UDP_SOCKET_PORT
-        value: "{{ $map.ports.client }}"
+        value: "7778"
       - name: SERVER_LIST_PORT
-        value: "{{ $map.ports.listen }}"
+        value: "27015"
       - name: RCON_PORT
-        value: "{{ $map.ports.rcon }}"
+        value: "27020"
     ports:
-      - containerPort: {{ $map.ports.game }}
+      - containerPort: 7777
         name: game
-      - containerPort: {{ $map.ports.client }}
-        name: client
-      - containerPort: {{ $map.ports.listen }}
+      - containerPort: 7778
+        name: socket
+      - containerPort: 27015
         name: list
-      - containerPort: {{ $map.ports.rcon }}
+      - containerPort: 27020
         name: rcon
     volumeMounts:
       - name: data
@@ -45,13 +47,4 @@ spec:
       persistentVolumeClaim:
         claimName: {{ $.Release.Name }}-map-{{ $map.names.k8s }}-pvc
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: {{ $.Release.Name }}-map-{{ $map.names.k8s }}-pvc
-  namespace: {{ $.Release.Namespace }}
-spec:
-  {{- with $map.storage }}
-    {{- toYaml . | nindent 2 }}
-  {{- end }}
 {{- end}}

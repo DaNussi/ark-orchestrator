@@ -1,0 +1,12 @@
+{{- range $map := .Values.game.maps }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ $.Release.Name }}-map-{{ $map.names.k8s }}-pvc
+  namespace: {{ $.Release.Namespace }}
+spec:
+  {{- with $map.storage }}
+    {{- toYaml . | nindent 2 }}
+  {{- end }}
+---
+{{- end}}
