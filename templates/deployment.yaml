@@ -31,21 +31,21 @@ spec:
           - name: SERVER_MAP
             value: "{{$map.names.map}}"
           - name: GAME_CLIENT_PORT
-            value: "7777"
+            value: "{{ $map.ports.game }}"
           - name: UDP_SOCKET_PORT
-            value: "7778"
+            value: "{{ $map.ports.socket }}"
           - name: SERVER_LIST_PORT
-            value: "27015"
+            value: "{{ $map.ports.listen }}"
           - name: RCON_PORT
-            value: "27020"
+            value: "{{ $map.ports.rcon }}"
         ports:
-          - containerPort: 7777
+          - containerPort: {{ $map.ports.game }}
             name: game
-          - containerPort: 7778
+          - containerPort: {{ $map.ports.socket }}
             name: socket
-          - containerPort: 27015
+          - containerPort: {{ $map.ports.list }}
             name: list
-          - containerPort: 27020
+          - containerPort: {{ $map.ports.rcon }}
             name: rcon
         volumeMounts:
           - name: data
