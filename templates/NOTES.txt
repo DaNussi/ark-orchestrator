@@ -1,21 +1,17 @@
-# Ark Orchestrator Notes
+-======- Successfully install Ark Orchestrator -======-
+MaxPlayers: {{ .Values.game.players.max }}
+{{ if not .Values.game.anticheat.battleye }}BattelEye is disabled.{{end}}
+{{ if .Values.game.anticheat.crossplay }}Crossplay is disabled.{{end}}
+Mods: {{ join "," .Values.game.mods }}
 
-This file contains important notes and information about the Ark Orchestrator project.
+{{- range $map := .Values.game.maps }}
+-===- {{ $map.names.title}} -===-
+Join server with name "{{ $.Values.game.name }} - {{$map.names.title}}".
+Server is reachable on ports:
+    Game: {{ $map.ports.game }}
+    Socket: {{ $map.ports.socket }}
+    Listen: {{ $map.ports.listen }}
+    Rcon: {{ $map.ports.rcon }}
 
-## Project Overview
-The Ark Orchestrator is designed to manage and automate the deployment and scaling of applications in a cloud environment.
 
-## Key Features
-- Automated deployment
-- Dynamic scaling
-- Monitoring and logging
-- High availability
-
-## Setup Instructions
-1. Clone the repository.
-2. Install the required dependencies.
-3. Configure the environment variables.
-4. Run the setup script.
-
-## Contact Information
-For any questions or support, please contact the project maintainers at support@arkorchestrator.com.
+{{- end}}
