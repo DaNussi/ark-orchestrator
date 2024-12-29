@@ -20,8 +20,8 @@ spec:
         image: {{ $.Values.image.repository }}:{{ $.Values.image.tag }}
         imagePullPolicy: {{ $.Values.image.pullPolicy }}
         securityContext:
-          runAsUser: 1000
-          fsGroup: 1000
+          runAsUser: 0
+          fsGroup: 0
         envFrom:
         - configMapRef:
             name: {{ $.Release.Name }}-common-config
