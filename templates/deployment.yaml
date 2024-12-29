@@ -48,12 +48,11 @@ spec:
           - containerPort: 27020
             name: rcon
         volumeMounts:
-          - name: ark-data
+          - name: data
             mountPath: /app
   volumeClaimTemplates:
     - metadata:
-        name: {{ $.Release.Name }}-map-{{ $map.names.k8s }}-pvc
-        namespace: {{ $.Release.Namespace }}
+        name: data
       spec:
         {{- with $map.storage }}
             {{- toYaml . | nindent 8 }}
