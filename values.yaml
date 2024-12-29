@@ -58,7 +58,8 @@ game:
         socket: 7780
         listen: 27016
         rcon: 27021
-      storage: 
+      storage:
+        type: Filesystem
         storageClassName: nfs-client
         accessModes:
           - ReadWriteOnce

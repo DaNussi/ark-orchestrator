@@ -41,7 +41,7 @@ spec:
         name: rcon
     volumeMounts:
       - name: data
-        mountPath: /app
+        mountPath: /app/ark
   volumes:
     - name: data
       persistentVolumeClaim:
