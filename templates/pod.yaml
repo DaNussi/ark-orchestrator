@@ -30,6 +30,8 @@ spec:
         value: "27015"
       - name: RCON_PORT
         value: "27020"
+      - name: ARK_SERVER_VOLUME
+        value: "/app"
     ports:
       - containerPort: 7777
         name: game
@@ -40,11 +42,17 @@ spec:
       - containerPort: 27020
         name: rcon
     volumeMounts:
-      - name: data
-        mountPath: /app/ark
+      - name: ark-data
+        mountPath: /app
+      - name: ark-manager
+        mountPath: /etc/arkmanager
   volumes:
-    - name: data
+    - name: ark-data
       persistentVolumeClaim:
         claimName: {{ $.Release.Name }}-map-{{ $map.names.k8s }}-pvc
+    - name: ark-manager
+      emptyDir:
+        medium: Memory
+        sizeLimit: 3Gi
 ---
 {{- end}}

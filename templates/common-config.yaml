@@ -13,5 +13,4 @@ data:
   PRE_UPDATE_BACKUP: "{{ .Values.game.events.preUpdate.backup }}"
   ENABLE_CROSSPLAY: "{{ .Values.game.anticheat.crossplay }}"
   DISABLE_BATTLEYE: "{{ not .Values.game.anticheat.battleye }}"
-  ARK_SERVER_VOLUME: "/app"
   GAME_MOD_IDS: "{{ join "," .Values.game.mods }}"
