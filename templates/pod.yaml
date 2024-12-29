@@ -44,15 +44,11 @@ spec:
     volumeMounts:
       - name: ark-data
         mountPath: /app
-      - name: ark-manager
-        mountPath: /etc/arkmanager
   volumes:
     - name: ark-data
-      persistentVolumeClaim:
-        claimName: {{ $.Release.Name }}-map-{{ $map.names.k8s }}-pvc
-    - name: ark-manager
-      emptyDir:
-        medium: Memory
-        sizeLimit: 3Gi
+      hostPath:
+        path: /home/sans/ark-server/{{ $map.names.k8s }} # Adjust this path as needed
+      # persistentVolumeClaim:
+      #   claimName: {{ $.Release.Name }}-map-{{ $map.names.k8s }}-pvc
 ---
 {{- end}}
