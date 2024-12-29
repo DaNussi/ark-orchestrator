@@ -51,7 +51,9 @@ spec:
           - name: data
             mountPath: /app
   volumeClaimTemplates:
-    - metadata:
+    - apiVersion: v1	
+      kind: PersistentVolumeClaim	
+      metadata:
         name: data
       spec:
         {{- with $map.storage }}

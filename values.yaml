@@ -181,8 +181,8 @@ game:
         map: "Gen2"
         k8s: "genesis-2"
       ports:
-        game: 7791
-        socket: 7792
+        game: 7793
+        socket: 7794
         listen: 27023
         rcon: 27043
       storage:
@@ -199,8 +199,8 @@ game:
         map: "CrystalIsles"
         k8s: "crystal-isles"
       ports:
-        game: 7793
-        socket: 7794
+        game: 7795
+        socket: 7796
         listen: 27024
         rcon: 27044
       storage:
@@ -217,8 +217,8 @@ game:
         map: "LostIsland"
         k8s: "lost-isles"
       ports:
-        game: 7795
-        socket: 7796
+        game: 7797
+        socket: 7798
         listen: 27025
         rcon: 27045
       storage:
@@ -235,8 +235,8 @@ game:
         map: "Fjordur"
         k8s: "fjordur"
       ports:
-        game: 7797
-        socket: 7798
+        game: 7799
+        socket: 7800
         listen: 27026
         rcon: 27046
       storage:
