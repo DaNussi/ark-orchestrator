@@ -54,7 +54,8 @@ spec:
   - metadata:
       name: data
     spec:
-      storageClassName: {{ $map.storage.class }}
+      volumeMode: Filesystem
+      storageClassName: "{{ $map.storage.class }}"
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
