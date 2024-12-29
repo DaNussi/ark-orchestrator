@@ -43,8 +43,12 @@ game:
         listen: 27015
         rcon: 27020
       storage: 
-        size: 1Gi
-        class:
+        storageClassName: default
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 4Gi
 
   mods:
     - "44654654"
