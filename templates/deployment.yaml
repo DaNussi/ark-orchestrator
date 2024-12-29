@@ -22,6 +22,12 @@ spec:
       - name: ark
         image: {{ $.Values.image.repository }}:{{ $.Values.image.tag }}
         imagePullPolicy: {{ $.Values.image.pullPolicy }}
+        livenessProbe:
+          exec:
+            command:
+            - runuser -u steam -- /usr/bin/arkmanager status | grep -q '[\w\W]*Server\ running:\ +Yes.*[\w\W]*'
+          initialDelaySeconds: 5
+          periodSeconds: 5
         envFrom:
           - configMapRef:
               name: {{ $.Release.Name }}-common-config
@@ -43,8 +49,8 @@ spec:
             name: game
           - containerPort: {{ $map.ports.socket }}
             name: socket
-          - containerPort: {{ $map.ports.list }}
-            name: list
+          - containerPort: {{ $map.ports.listen }}
+            name: listen
           - containerPort: {{ $map.ports.rcon }}
             name: rcon
         volumeMounts:
