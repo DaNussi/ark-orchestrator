@@ -41,14 +41,15 @@ game:
         game: 7777
         socket: 7778
         listen: 27015
-        rcon: 27020
+        rcon: 27035
       storage: 
         storageClassName: nfs-client
         accessModes:
           - ReadWriteOnce
         resources:
           requests:
-            storage: 4Gi
+            storage: 40Gi
+
     - names:
         title: "The Center"
         map: "TheCenter"
@@ -57,7 +58,7 @@ game:
         game: 7779
         socket: 7780
         listen: 27016
-        rcon: 27021
+        rcon: 27036
       storage:
         type: Filesystem
         storageClassName: nfs-client
@@ -65,6 +66,186 @@ game:
           - ReadWriteOnce
         resources:
           requests:
-            storage: 4Gi
+            storage: 40Gi
+
+    - names:
+        title: "Scorched Earth"
+        map: "ScorchedEarth_P"
+        k8s: "scorched-earth"
+      ports:
+        game: 7781
+        socket: 7782
+        listen: 27017
+        rcon: 27037
+      storage:
+        type: Filesystem
+        storageClassName: nfs-client
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 40Gi
+
+    - names:
+        title: "Ragnarok"
+        map: "Ragnarok"
+        k8s: "ragnarok"
+      ports:
+        game: 7783
+        socket: 7784
+        listen: 27018
+        rcon: 27038
+      storage:
+        type: Filesystem
+        storageClassName: nfs-client
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 40Gi
+
+    - names:
+        title: "Aberration"
+        map: "Aberration_P"
+        k8s: "aberration"
+      ports:
+        game: 7785
+        socket: 7786
+        listen: 27019
+        rcon: 27039
+      storage:
+        type: Filesystem
+        storageClassName: nfs-client
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 40Gi
+
+    - names:
+        title: "Extinction"
+        map: "Extinction"
+        k8s: "extinction"
+      ports:
+        game: 7787
+        socket: 7788
+        listen: 27020
+        rcon: 27040
+      storage:
+        type: Filesystem
+        storageClassName: nfs-client
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 40Gi
+
+    - names:
+        title: "Valguero"
+        map: "Valguero_P"
+        k8s: "valguero"
+      ports:
+        game: 7789
+        socket: 7790
+        listen: 27021
+        rcon: 27041
+      storage:
+        type: Filesystem
+        storageClassName: nfs-client
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 40Gi
+
+    - names:
+        title: "Genesis Part 1"
+        map: "Genesis"
+        k8s: "genesis-1"
+      ports:
+        game: 7791
+        socket: 7792
+        listen: 27022
+        rcon: 27042
+      storage:
+        type: Filesystem
+        storageClassName: nfs-client
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 40Gi
+
+    - names:
+        title: "Genesis Part 2"
+        map: "Gen2"
+        k8s: "genesis-2"
+      ports:
+        game: 7791
+        socket: 7792
+        listen: 27023
+        rcon: 27043
+      storage:
+        type: Filesystem
+        storageClassName: nfs-client
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 40Gi
+
+    - names:
+        title: "Crystal Isles"
+        map: "CrystalIsles"
+        k8s: "crystal-isles"
+      ports:
+        game: 7793
+        socket: 7794
+        listen: 27024
+        rcon: 27044
+      storage:
+        type: Filesystem
+        storageClassName: nfs-client
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 40Gi
+
+    - names:
+        title: "Lost Island"
+        map: "LostIsland"
+        k8s: "lost-isles"
+      ports:
+        game: 7795
+        socket: 7796
+        listen: 27025
+        rcon: 27045
+      storage:
+        type: Filesystem
+        storageClassName: nfs-client
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 40Gi
+
+    - names:
+        title: "Fjordur"
+        map: "Fjordur"
+        k8s: "fjordur"
+      ports:
+        game: 7797
+        socket: 7798
+        listen: 27026
+        rcon: 27046
+      storage:
+        type: Filesystem
+        storageClassName: nfs-client
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 40Gi
 
   mods:
