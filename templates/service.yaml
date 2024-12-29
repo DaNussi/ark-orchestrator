@@ -13,17 +13,21 @@ spec:
       port: {{ $map.ports.game }}
       nodePort: {{ $map.ports.game }}
       targetPort: game
+      name: game
     - protocol: UDP
       port: {{ $map.ports.socket }}
       nodePort: {{ $map.ports.socket }}
       targetPort: socket
+      name: socket
     - protocol: UDP
       port: {{ $map.ports.listen }}
       nodePort: {{ $map.ports.listen }}
       targetPort: listen
+      name: listen
     - protocol: UDP
       port: {{ $map.ports.rcon }}
       nodePort: {{ $map.ports.rcon }}
       targetPort: rcon
+      name: rcon
 ---
 {{- end}}
