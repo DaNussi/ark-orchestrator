@@ -7,7 +7,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app: {{ $.Release.Name }}-map
+    app: {{ $.Release.Name }}-map-{{ $map.names.k8s }}
   ports:
     - protocol: UDP
       port: {{ $map.ports.game }}

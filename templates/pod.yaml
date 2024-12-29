@@ -5,7 +5,7 @@ metadata:
   name: {{ $.Release.Name }}-map-{{ $map.names.k8s }}-pod
   namespace: {{ $.Release.Namespace }}
   labels:
-    app: {{ $.Release.Name }}-map
+    app: {{ $.Release.Name }}-map-{{ $map.names.k8s }}
 spec:
   containers:
   - name: ark
