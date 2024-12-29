@@ -26,14 +26,20 @@ spec:
           exec:
             command:
             - runuser -u steam -- /usr/bin/arkmanager status | grep '.*Server\ listening.*Yes.*'
-          initialDelaySeconds: 5
-          periodSeconds: 5
+          initialDelaySeconds: 30
+          timeoutSeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 360
         readinessProbe:
           exec:
             command:
             - runuser -u steam -- /usr/bin/arkmanager status | grep '.*Server\ running.*Yes.*'
-          initialDelaySeconds: 5
-          periodSeconds: 5
+          initialDelaySeconds: 30
+          timeoutSeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 360
         envFrom:
           - configMapRef:
               name: {{ $.Release.Name }}-common-config
