@@ -25,13 +25,13 @@ spec:
         livenessProbe:
           exec:
             command:
-            - runuser -u steam -- /usr/bin/arkmanager status | grep '.*Server\ running.*Yes.*'
+            - runuser -u steam -- /usr/bin/arkmanager status | grep '.*Server\ listening.*Yes.*'
           initialDelaySeconds: 5
           periodSeconds: 5
         readinessProbe:
           exec:
             command:
-            - runuser -u steam -- /usr/bin/arkmanager status | grep '.*Server\ listening.*Yes.*'
+            - runuser -u steam -- /usr/bin/arkmanager status | grep '.*Server\ running.*Yes.*'
           initialDelaySeconds: 5
           periodSeconds: 5
         envFrom:
