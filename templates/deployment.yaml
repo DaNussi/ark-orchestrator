@@ -28,6 +28,12 @@ spec:
             - runuser -u steam -- /usr/bin/arkmanager status | grep -q '[\w\W]*Server\ running:\ +Yes.*[\w\W]*'
           initialDelaySeconds: 5
           periodSeconds: 5
+        readinessProbe:
+          exec:
+            command:
+            - runuser -u steam -- /usr/bin/arkmanager status | grep -q '[\w\W]*Server\ listening:\ +Yes.*[\w\W]*'
+          initialDelaySeconds: 5
+          periodSeconds: 5
         envFrom:
           - configMapRef:
               name: {{ $.Release.Name }}-common-config
