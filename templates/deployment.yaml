@@ -19,11 +19,12 @@ spec:
       - name: ark
         image: {{ $.Values.image.repository }}:{{ $.Values.image.tag }}
         imagePullPolicy: {{ $.Values.image.pullPolicy }}
-
+        securityContext:
+          runAsUser: 1000
+          fsGroup: 1000
         envFrom:
         - configMapRef:
             name: {{ $.Release.Name }}-common-config
-
         env:
         - name: SESSION_NAME
           value: "{{ $.Values.game.name }} - {{$map.names.title}}"
@@ -37,8 +38,6 @@ spec:
           value: "{{ $map.ports.listen }}"
         - name: RCON_PORT
           value: "{{ $map.ports.rcon }}"
-
-
         ports:
         - containerPort: {{ $map.ports.game }}
           name: game
@@ -48,20 +47,17 @@ spec:
           name: list
         - containerPort: {{ $map.ports.rcon }}
           name: rcon
-
-
         volumeMounts:
         - name: data
           mountPath: /app
-
-
   volumeClaimTemplates:
   - metadata:
       name: data
     spec:
+      storageClassName: {{ $map.storage.class }}
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
-          storage: {{ $map.storage }}
+          storage: {{ $map.storage.size }}
 ---
 {{- end}}
