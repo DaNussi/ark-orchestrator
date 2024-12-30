@@ -12,22 +12,22 @@ spec:
     - protocol: UDP
       port: {{ $map.ports.game }}
       nodePort: {{ $map.ports.game }}
-      targetPort: game
+      targetPort: {{ $map.ports.game }}
       name: game
     - protocol: UDP
       port: {{ $map.ports.socket }}
       nodePort: {{ $map.ports.socket }}
-      targetPort: socket
+      targetPort: {{ $map.ports.socket }}
       name: socket
     - protocol: UDP
       port: {{ $map.ports.listen }}
       nodePort: {{ $map.ports.listen }}
-      targetPort: listen
+      targetPort: {{ $map.ports.listen }}
       name: listen
     - protocol: TCP
       port: {{ $map.ports.rcon }}
       nodePort: {{ $map.ports.rcon }}
-      targetPort: rcon
+      targetPort: {{ $map.ports.rcon }}
       name: rcon
 ---
 {{- end}}
