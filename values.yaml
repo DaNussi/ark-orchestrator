@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: hermsi/ark-server
+  repository: docker.nussi.net/ark-orchestrator/game:latest
   pullPolicy: IfNotPresent
   tag: "latest"
 
