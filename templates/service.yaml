@@ -5,9 +5,9 @@ metadata:
   name: {{ $.Release.Name }}-map-{{ $map.names.k8s }}-svc
   namespace: {{ $.Release.Namespace }}
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
-    app: {{ $.Release.Name }}-map-{{ $map.names.k8s }}
+    app.kubernetes.io/name: {{ $.Release.Name }}-map-{{ $map.names.k8s }}
   ports:
     - protocol: UDP
       port: {{ $map.ports.game }}

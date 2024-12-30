@@ -5,17 +5,17 @@ metadata:
   name: {{ $.Release.Name }}-map-{{ $map.names.k8s }}-pod
   namespace: {{ $.Release.Namespace }}
   labels:
-    app: {{ $.Release.Name }}-map-{{ $map.names.k8s }}
+    app.kubernetes.io/name: {{ $.Release.Name }}-map-{{ $map.names.k8s }}
 spec:
   selector:
     matchLabels:
-      app: {{ $.Release.Name }}-map-{{ $map.names.k8s }}
+      app.kubernetes.io/name: {{ $.Release.Name }}-map-{{ $map.names.k8s }}
   serviceName: {{ $.Release.Name }}-map-{{ $map.names.k8s }}-svc
   replicas: 1
   template:
     metadata:
       labels:
-        app: {{ $.Release.Name }}-map-{{ $map.names.k8s }}
+        app.kubernetes.io/name: {{ $.Release.Name }}-map-{{ $map.names.k8s }}
     spec:
       terminationGracePeriodSeconds: 10
       containers:
