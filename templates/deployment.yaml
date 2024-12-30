@@ -22,24 +22,24 @@ spec:
       - name: ark
         image: {{ $.Values.image.repository }}:{{ $.Values.image.tag }}
         imagePullPolicy: {{ $.Values.image.pullPolicy }}
-        livenessProbe:
-          exec:
-            command:
-            - runuser -u steam -- /usr/bin/arkmanager status | grep '.*Server\ listening.*Yes.*'
-          initialDelaySeconds: 30
-          timeoutSeconds: 10
-          periodSeconds: 10
-          successThreshold: 1
-          failureThreshold: 360
-        readinessProbe:
-          exec:
-            command:
-            - runuser -u steam -- /usr/bin/arkmanager status | grep '.*Server\ running.*Yes.*'
-          initialDelaySeconds: 30
-          timeoutSeconds: 10
-          periodSeconds: 10
-          successThreshold: 1
-          failureThreshold: 360
+        # livenessProbe:
+        #   exec:
+        #     command:
+        #     - runuser -u steam -- /usr/bin/arkmanager status | grep -q '.*Server\ running.*Yes.*'
+        #   initialDelaySeconds: 30
+        #   timeoutSeconds: 10
+        #   periodSeconds: 10
+        #   successThreshold: 1
+        #   failureThreshold: 360
+        # readinessProbe:
+        #   exec:
+        #     command:
+        #     - runuser -u steam -- /usr/bin/arkmanager status | grep -q '.*Server\ listening.*Yes.*'
+        #   initialDelaySeconds: 30
+        #   timeoutSeconds: 10
+        #   periodSeconds: 10
+        #   successThreshold: 1
+        #   failureThreshold: 360
         envFrom:
           - configMapRef:
               name: {{ $.Release.Name }}-common-config
