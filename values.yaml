@@ -16,7 +16,6 @@ game:
     id: thisisaverysecrretclusterid
     noTransferFromFiltering: true
     storage:
-      type: Filesystem
       storageClassName: nfs-client
       accessModes:
         - ReadWriteMany
