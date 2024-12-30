@@ -14,3 +14,8 @@ data:
   ENABLE_CROSSPLAY: "{{ .Values.game.anticheat.crossplay }}"
   DISABLE_BATTLEYE: "{{ not .Values.game.anticheat.battleye }}"
   GAME_MOD_IDS: "{{ join "," .Values.game.mods }}"
+  CLUSTER_ID: "{{ .Values.game.cluster.id }}"
+  ENABLE_NO_TRANSFER_FROM_FILTERING: "{{ .Values.game.cluster.noTransferFromFiltering }}"
+  SERVER_GAME_LOG: "{{ .Values.game.logs.enabled }}"
+  SERVER_GAME_LOG_INCLUDE_TRIBE_LOGS: "{{ .Values.game.logs.includeTribe }}"
+  MINIMUM_TIME_BETWEEN_INVENTORY_RETRIEVAL: "{{ .Values.game.config.minimumTimeBetweenInventoryRetrieval }}"
