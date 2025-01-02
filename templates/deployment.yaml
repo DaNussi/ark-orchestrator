@@ -22,7 +22,7 @@ spec:
       - name: ark
         image: {{ $.Values.image.repository }}:{{ $.Values.image.tag }}
         imagePullPolicy: {{ $.Values.image.pullPolicy }}
-        command:
+        args:
           - "--verbose"
           {{- range $ark := $.Values.game.config.ark }}
           - "--arkopt,{{ $ark }}"
