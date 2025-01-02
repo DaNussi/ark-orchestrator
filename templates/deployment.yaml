@@ -69,6 +69,8 @@ spec:
             value: "{{ $map.ports.rcon }}"
           - name: CLUSTER_DIR_OVERRIDE
             value: "/cluster"
+          - name: ARK_SERVER_APPEND_VOLUME
+            value: "/append"
         ports:
           - containerPort: {{ $map.ports.game }}
             name: game
@@ -84,10 +86,10 @@ spec:
           - name: cluster
             mountPath: /cluster
           - name: {{ $.Release.Name }}-game-config
-            mountPath: /app/Game.ini.append
+            mountPath: /append/Game.ini
             subPath: Game.ini
           - name: {{ $.Release.Name }}-game-config
-            mountPath: /app/GameUserSettings.ini.append
+            mountPath: /append/GameUserSettings.ini
             subPath: GameUserSettings.ini
       volumes:
         - name: cluster
