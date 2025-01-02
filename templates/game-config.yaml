@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-game-config
   namespace: {{ .Release.Namespace }}
-stringData:
+data:
   Game.ini: |-
     [/script/shootergame.shootergamemode]
     # bDisableGenesisMissions=false
