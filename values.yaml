@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: docker.nussi.net/ark-orchestrator/game
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   tag: "latest"
 
 game:
@@ -28,19 +28,21 @@ game:
     includeTribe: true
 
   config:
-    minimumTimeBetweenInventoryRetrieval: 3600 # https://ark.fandom.com/wiki/351.5
+    ark: []
+    arkopt: []
+    arkflag: []
 
   anticheat:
     battleye: false
     crossplay: false
 
   players:
-    max: 20
-    password: "test"
+    max: 69
+    password: "KenHenning"
     kick: false
 
   admin:
-    password: "asldhjaskhdkja"
+    password: "ArkOperator69420#"
 
   events:
     preUpdate:
@@ -268,3 +270,9 @@ game:
             storage: 70Gi
 
   mods:
+  - "1404697612"
+  - "761535755"
+  - "895711211"
+  - "889745138"
+  - "821530042"
+  - "725398419"

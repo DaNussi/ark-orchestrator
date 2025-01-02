@@ -18,4 +18,3 @@ data:
   ENABLE_NO_TRANSFER_FROM_FILTERING: "{{ .Values.game.cluster.noTransferFromFiltering }}"
   SERVER_GAME_LOG: "{{ .Values.game.logs.enabled }}"
   SERVER_GAME_LOG_INCLUDE_TRIBE_LOGS: "{{ .Values.game.logs.includeTribe }}"
-  MINIMUM_TIME_BETWEEN_INVENTORY_RETRIEVAL: "{{ .Values.game.config.minimumTimeBetweenInventoryRetrieval }}"

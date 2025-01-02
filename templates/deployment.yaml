@@ -22,6 +22,17 @@ spec:
       - name: ark
         image: {{ $.Values.image.repository }}:{{ $.Values.image.tag }}
         imagePullPolicy: {{ $.Values.image.pullPolicy }}
+        command:
+          - "--verbose"
+          {{- range $ark := $.Values.game.config.ark }}
+          - "--arkopt,{{ $ark }}"
+          {{- end}}
+          {{- range $arkopt := $.Values.game.config.arkopt }}
+          - "--arkopt,-{{ $arkopt }}"
+          {{- end}}
+          {{- range $arkflag := $.Values.game.config.arkflag }}
+          - "--arkopt,-{{ $arkflag }}"
+          {{- end}}
         # livenessProbe:
         #   exec:
         #     command:
@@ -72,10 +83,19 @@ spec:
             mountPath: /app
           - name: cluster
             mountPath: /cluster
+          - name: game-config-volume
+            mountPath: /app/Game.ini.append
+            subPath: Game.ini
+          - name: game-config-volume
+            mountPath: /app/GameUserSettings.ini.append
+            subPath: GameUserSettings.ini
       volumes:
         - name: cluster
           persistentVolumeClaim:
             claimName: {{ $.Release.Name }}-cluster-pvc
+        - name: game-config-volume
+          configMap:
+            name: {{ $.Release.Name }}-game-config
   volumeClaimTemplates:
     - apiVersion: v1	
       kind: PersistentVolumeClaim	
