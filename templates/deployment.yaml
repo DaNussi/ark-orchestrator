@@ -83,17 +83,17 @@ spec:
             mountPath: /app
           - name: cluster
             mountPath: /cluster
-          - name: game-config-volume
+          - name: {{ $.Release.Name }}-game-config
             mountPath: /app/Game.ini.append
             subPath: Game.ini
-          - name: game-config-volume
+          - name: {{ $.Release.Name }}-game-config
             mountPath: /app/GameUserSettings.ini.append
             subPath: GameUserSettings.ini
       volumes:
         - name: cluster
           persistentVolumeClaim:
             claimName: {{ $.Release.Name }}-cluster-pvc
-        - name: game-config-volume
+        - name: {{ $.Release.Name }}-game-config
           configMap:
             name: {{ $.Release.Name }}-game-config
   volumeClaimTemplates:
