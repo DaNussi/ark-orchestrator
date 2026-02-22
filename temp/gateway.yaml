@@ -1,0 +1,64 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: ark-cluster-gateway
+  namespace: ark-orchestrator
+spec:
+  gatewayClassName: envoy
+  listeners:
+    - name: query
+      protocol: UDP
+      port: 27015
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - name: rcon
+      protocol: TCP
+      port: 27020
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - name: game
+      protocol: UDP
+      port: 7777
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - name: raw
+      protocol: UDP
+      port: 7778
+      allowedRoutes:
+        namespaces:
+          from: Same
+---
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: UDPRoute
+metadata:
+  name: ark-cluster-udp-route-the-island
+  namespace: ark-orchestrator
+spec:
+  parentRefs:
+    - name: ark-cluster-gateway
+  rules:
+    - backendRefs:
+        - name: ark-cluster-service-the-island
+          port: 27015
+    - backendRefs:
+        - name: ark-cluster-service-the-island
+          port: 7777
+    - backendRefs:
+        - name: ark-cluster-service-the-island
+          port: 7778
+---
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: TCPRoute
+metadata:
+  name: ark-cluster-tcp-route-the-island
+  namespace: ark-orchestrator
+spec:
+  parentRefs:
+    - name: ark-cluster-gateway
+  rules:
+    - backendRefs:
+        - name: ark-cluster-service-the-island
+          port: 27020

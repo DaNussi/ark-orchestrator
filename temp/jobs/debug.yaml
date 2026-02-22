@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ark-cluster-debug
+spec:
+  backoffLimit: 1
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: steam-cmd
+          image: ghcr.io/danussi/steamcmd:main
+          command:
+            - steamcmd
+          args:
+            - "+force_install_dir"
+            - "/data"
+            - "+login"
+          volumeMounts:
+            - mountPath: /data
+              name: ark-cluster-storage
+      volumes:
+        - name: ark-cluster-storage
+          persistentVolumeClaim:
+            claimName: ark-cluster-storage

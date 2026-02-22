@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ark-cluster-install
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  backoffLimit: 4
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: steam-cmd
+          image: ghcr.io/danussi/steamcmd:main
+          command:
+            - steamcmd
+          args:
+            - "+force_install_dir"
+            - "/data"
+            - "+login"
+            - "anonymous"
+            - "+app_update"
+            - "376030"
+            - "+app_update"
+            - "376030"
+            - "+app_update"
+            - "376030"
+            - "+quit"
+          volumeMounts:
+            - mountPath: /data
+              name: ark-cluster-storage
+      volumes:
+        - name: ark-cluster-storage
+          persistentVolumeClaim:
+            claimName: ark-cluster-storage

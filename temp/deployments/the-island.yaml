@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ark-cluster-deployment-the-island
+  namespace: ark-orchestrator
+spec:
+  selector:
+    matchLabels:
+      app: ark-cluster-deployment-the-island
+  serviceName: ark-cluster-deployment-the-island
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ark-cluster-deployment-the-island
+    spec:
+      containers:
+        - name: runner
+          image: ghcr.io/danussi/steamcmd:main
+          lifecycle:
+            stopSignal: SIGKILL
+          command:
+            - /data/ShooterGame/Binaries/Linux/ShooterGameServer
+          args:
+            - "TheIsland?listen?SessionName=Test1234?RCONEnabled=True?RCONServerGameLogBuffer=600?ServerAdminPassword=Test1234"
+            - "-log"
+            - "-server"
+            - "-servergamelog"
+            - "-severgamelogincludetribelogs"
+            - "-gameplaylogging"
+            - "-NoBattlEye"
+          ports:
+            - containerPort: 27015
+              name: query
+              protocol: UDP
+            - containerPort: 27020
+              name: rcon
+              protocol: TCP
+            - containerPort: 7777
+              name: game
+              protocol: UDP
+            - containerPort: 7778
+              name: raw
+              protocol: UDP
+          volumeMounts:
+            - mountPath: /data
+              name: ark-cluster-storage
+#      initContainers:
+#        - name: logger
+#          image: alpine:latest
+#          securityContext:
+#            runAsUser: 0
+#            runAsGroup: 0
+#          command: ['sh', '-c', 'tail -F /data/ShooterGame/Saved/Logs/ShooterGame.log']
+#          restartPolicy: Always
+#          volumeMounts:
+#            - mountPath: /data
+#              name: ark-cluster-storage
+
+      volumes:
+        - name: ark-cluster-storage
+          persistentVolumeClaim:
+            claimName: ark-cluster-storage
+
