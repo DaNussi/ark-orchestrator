@@ -13,8 +13,7 @@ RUN pacman -Syu --needed --noconfirm  \
     curl \
     lsof \
     lib32-gcc-libs \
-    bzip2 \
-    nano
+    bzip2
 
 RUN git clone --depth 1 -b master https://github.com/arkmanager/ark-server-tools.git && \
     cd ark-server-tools/tools && \
