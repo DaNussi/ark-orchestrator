@@ -16,19 +16,12 @@ spec:
     spec:
       containers:
         - name: runner
-          image: ghcr.io/danussi/steamcmd:main
+          image: ghcr.io/danussi/ark-orchestrator-arkmanager:main
+          command: ["/bin/bash", "/scripts/start.sh"]
           lifecycle:
-            stopSignal: SIGKILL
-          command:
-            - /data/ShooterGame/Binaries/Linux/ShooterGameServer
-          args:
-            - "TheIsland?listen?SessionName=Test1234?RCONEnabled=True?RCONServerGameLogBuffer=600?ServerAdminPassword=Test1234"
-            - "-log"
-            - "-server"
-            - "-servergamelog"
-            - "-severgamelogincludetribelogs"
-            - "-gameplaylogging"
-            - "-NoBattlEye"
+            preStop:
+              exec:
+                command: ["/bin/bash", "/scripts/stop.sh"]
           ports:
             - containerPort: 27015
               name: query
@@ -45,20 +38,14 @@ spec:
           volumeMounts:
             - mountPath: /data
               name: ark-cluster-storage
-#      initContainers:
-#        - name: logger
-#          image: alpine:latest
-#          securityContext:
-#            runAsUser: 0
-#            runAsGroup: 0
-#          command: ['sh', '-c', 'tail -F /data/ShooterGame/Saved/Logs/ShooterGame.log']
-#          restartPolicy: Always
-#          volumeMounts:
-#            - mountPath: /data
-#              name: ark-cluster-storage
-
+            - mountPath: /scripts
+              name: ark-cluster-scripts
       volumes:
         - name: ark-cluster-storage
           persistentVolumeClaim:
             claimName: ark-cluster-storage
-
+        - name: ark-cluster-scripts
+          configMap:
+            name: ark-cluster-scripts
+            optional: false
+            defaultMode: 0777

@@ -8,7 +8,9 @@ metadata:
 spec:
   selector:
     app: ark-cluster-deployment-the-island
-  type: ClusterIP
+  type: LoadBalancer
+#  externalTrafficPolicy: Local
+#  allocateLoadBalancerNodePorts: false
   ports:
     - port: 27015
       name: query

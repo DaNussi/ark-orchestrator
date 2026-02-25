@@ -18,7 +18,7 @@ spec:
             - steamcmd
           args:
             - "+force_install_dir"
-            - "/data"
+            - "/data/server"
             - "+login"
             - "anonymous"
             - "+app_update"
@@ -29,9 +29,9 @@ spec:
             - "376030"
             - "+quit"
           volumeMounts:
-            - mountPath: /data
-              name: ark-cluster-storage
+            - mountPath: /data/server
+              name: ark-nexus-server
       volumes:
-        - name: ark-cluster-storage
+        - name: ark-nexus-server
           persistentVolumeClaim:
-            claimName: ark-cluster-storage
+            claimName: ark-nexus-server

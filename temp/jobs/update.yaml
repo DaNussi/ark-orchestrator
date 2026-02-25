@@ -22,9 +22,9 @@ spec:
             - "validate"
             - "+quit"
           volumeMounts:
-            - mountPath: /data
-              name: ark-cluster-storage
+            - mountPath: /data/server
+              name: ark-nexus-server
       volumes:
-        - name: ark-cluster-storage
+        - name: ark-nexus-server
           persistentVolumeClaim:
-            claimName: ark-cluster-storage
+            claimName: ark-nexus-server
