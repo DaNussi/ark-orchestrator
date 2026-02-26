@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ark-nexus-the-island-config
+data:
+  server.cfg: |
+    serverMap="TheIsland"
+    ark_SessionName="Ark Nexus - The Island"

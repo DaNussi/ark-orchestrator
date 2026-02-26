@@ -1,16 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ark-cluster-service-the-island
+  name: ark-nexus-crystal-isles
   namespace: ark-orchestrator
-  labels:
-    app: ark-cluster-service
 spec:
-  selector:
-    app: ark-cluster-deployment-the-island
   type: LoadBalancer
-#  externalTrafficPolicy: Local
-#  allocateLoadBalancerNodePorts: false
+  selector:
+    app: ark-nexus-crystal-isles
   ports:
     - port: 27015
       name: query

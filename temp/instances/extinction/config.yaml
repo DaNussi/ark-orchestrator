@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ark-nexus-extinction-config
+data:
+  server.cfg: |
+    serverMap="Extinction"
+    ark_SessionName="Ark Nexus - Extinction"

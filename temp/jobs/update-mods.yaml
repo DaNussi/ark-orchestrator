@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: ark-nexus-install
+  name: ark-nexus-update-mods
   namespace: ark-orchestrator
 spec:
   backoffLimit: 3
@@ -10,34 +10,35 @@ spec:
       restartPolicy: Never
       containers:
         - name: steam-cmd
-          image: ghcr.io/danussi/steamcmd:main
+          image: ghcr.io/danussi/ark-orchestrator-arkmanager:main
           command:
-            - steamcmd
+            - arkmanager
           args:
-            - "+force_install_dir"
-            - "/data/server"
-            - "+login"
-            - "anonymous"
-            - "+app_update"
-            - "376030"
-            - "validate"
-            - "+quit"
+            - "installmods"
           volumeMounts:
             - mountPath: /data/server
               name: server-storage
             - mountPath: /home/ark/.steam/appcache
               name: steamcmd-appcache
+            - mountPath: /home/ark/.arkmanager.cfg
+              subPath: arkmanager.cfg
+              name: arkmanager-config
+            - mountPath: /home/ark/.config/arkmanager/instances/server.cfg
+              subPath: default.cfg
+              name: arkmanager-config
+            - mountPath: /data/save
+              name: instance-save-storage
 
       volumes:
         - name: server-storage
           persistentVolumeClaim:
             claimName: ark-nexus-server-sotrage
-
+        - name: steamcmd-appcache
+          emptyDir: {}
+        - name: instance-save-storage
+          emptyDir: {}
         - name: arkmanager-config
           configMap:
             name: ark-nexus-arkmanager-config
             optional: false
             defaultMode: 0777
-
-        - name: steamcmd-appcache
-          emptyDir: {}

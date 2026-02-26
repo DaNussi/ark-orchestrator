@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ark-nexus-aquatica-config
+data:
+  server.cfg: |
+    serverMap="Aquatica"
+    ark_SessionName="Ark Nexus - Aquatica"

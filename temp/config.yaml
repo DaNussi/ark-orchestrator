@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ark-nexus-arkmanager-config
+  namespace: ark-orchestrator
+data:
+  arkmanager.cfg: |
+    arkstChannel="master"
+    
+    steamcmdroot="/usr/bin"
+    steamcmdexec="steamcmd"
+    steamcmd_user="ark"
+    
+    defaultinstance="server"
+    ark_AltSaveDirectoryName="server"
+    arkopt_ClusterDirOverride="/data/cluster"
+    arkserverroot="/data/server"
+    arkbackupdir="/data/backup"
+    arkbackupcompress="true"
+    arkMaxBackupSizeGB="2"
+    
+    
+    ark_RCONEnabled="True"
+    ark_RCONPort="27020"
+    ark_Port="7777"
+    ark_QueryPort="27015"
+    ark_MaxPlayers="69"
+
+    ark_GameModIds="1404697612,889745138,725398419,821530042"
+    # 1404697612 - Awesome SpyGlass!
+    # 889745138 - Awesome Teleporters!
+    # 725398419 - Snappy Saddles & Rafts
+    # 821530042 - Upgrade Station v1.8i
+    
+    ark_ServerPassword="sbudget"
+    ark_ServerAdminPassword="a9abs1a1dsa79a17bsa"
+    arkopt_clusterid=9187916547985497655438781
+    
+  default.cfg: |
+    serverMap="TheIsland"
+    ark_SessionName="Ark Nexus - Default"
+
+  boostrap.sh: |
+    #!/bin/bash
+    set -x
+    rm -rf /data/server/ShooterGame/Saved
+    ln --force --symbolic /data/save /data/server/ShooterGame/Saved
+    mkdir /data/save/Config
+    mkdir /data/save/Config/LinuxServer
+    cp -u /data/server/ShooterGame/Config/DefaultGameUserSettings.ini /data/save/Config/LinuxServer/GameUserSettings.ini
+    cp -u /data/server/ShooterGame/Config/DefaultGame.ini /data/save/Config/LinuxServer/Game.ini
+    cp -u /data/server/ShooterGame/Config/DefaultEditor.ini /data/save/Config/LinuxServer/Editor.ini

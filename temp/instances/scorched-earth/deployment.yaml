@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ark-nexus-scorched-earth
+  namespace: ark-orchestrator
+spec:
+  selector:
+    matchLabels:
+      app: ark-nexus-scorched-earth
+  serviceName: ark-cluster-deployment-scorched-earth
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ark-nexus-scorched-earth
+        cluster: ark-nexus
+    spec:
+      initContainers:
+        - name: bootstrap
+          image: ghcr.io/danussi/ark-orchestrator-arkmanager:main
+          command: ["/bin/bash", "/data/script/boostrap.sh"]
+          volumeMounts:
+            - mountPath: /data/server
+              name: server-storage
+            - mountPath: /data/save
+              name: instance-save-storage
+            - mountPath: /data/script
+              name: arkmanager-config
+
+      containers:
+        - name: runner
+          image: ghcr.io/danussi/ark-orchestrator-arkmanager:main
+          command: [ "arkmanager", "run", "--noautoupdate" ]
+          lifecycle:
+            preStop:
+              exec:
+                command: [ "arkmanager", "stop" ]
+          ports:
+            - containerPort: 27015
+              name: query
+              protocol: UDP
+            - containerPort: 27020
+              name: rcon
+              protocol: TCP
+            - containerPort: 7777
+              name: game
+              protocol: UDP
+            - containerPort: 7778
+              name: raw
+              protocol: UDP
+          volumeMounts:
+            - mountPath: /data/server
+              name: server-storage
+            - mountPath: /data/save
+              name: instance-save-storage
+            - mountPath: /data/backup
+              name: instance-backup-storage
+
+            - mountPath: /home/ark/.arkmanager.cfg
+              subPath: arkmanager.cfg
+              name: arkmanager-config
+            - mountPath: /home/ark/.config/arkmanager/instances/server.cfg
+              subPath: server.cfg
+              name: instance-config
+            - mountPath: /data/cluster
+              name: cluster-storage
+      volumes:
+        - name: cluster-storage
+          persistentVolumeClaim:
+              claimName: ark-nexus-cluster-storage
+        - name: server-storage
+          persistentVolumeClaim:
+            claimName: ark-nexus-server-sotrage
+        - name: instance-save-storage
+          persistentVolumeClaim:
+            claimName: ark-nexus-scorched-earth-save-sotrage
+        - name: instance-backup-storage
+          persistentVolumeClaim:
+            claimName: ark-nexus-scorched-earth-backup-sotrage
+
+        - name: instance-config
+          configMap:
+            name: ark-nexus-scorched-earth-config
+            optional: false
+            defaultMode: 0777
+        - name: arkmanager-config
+          configMap:
+            name: ark-nexus-arkmanager-config
+            optional: false
+            defaultMode: 0777

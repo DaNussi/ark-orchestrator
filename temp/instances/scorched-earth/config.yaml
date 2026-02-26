@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ark-nexus-scorched-earth-config
+data:
+  server.cfg: |
+    serverMap="ScorchedEarth_P"
+    ark_SessionName="Ark Nexus - Scorched Earth"

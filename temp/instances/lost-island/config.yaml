@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ark-nexus-lost-island-config
+data:
+  server.cfg: |
+    serverMap="LostIsland"
+    ark_SessionName="Ark Nexus - Lost Island"

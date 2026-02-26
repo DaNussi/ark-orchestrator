@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ark-nexus-valguero-config
+data:
+  server.cfg: |
+    serverMap="Valguero_P"
+    ark_SessionName="Ark Nexus - Valguero"
